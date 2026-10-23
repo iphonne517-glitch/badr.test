@@ -889,27 +889,32 @@
           </div>
         </div>
 
-        <!-- Presets Row -->
-        <div class="preset-box">
-          <div class="preset-title">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            سلم رواتب الأفراد العسكريين (الرتبة والدرجة):
+        <!-- Presets Row: سلم الرواتب 1447 / 1448 (2026) -->
+        <div class="preset-box" style="border: 1.5px solid rgba(27, 67, 50, 0.25); background: var(--bg-subtle);">
+          <div class="preset-title" style="font-size: 0.92rem; font-weight: 800; color: var(--primary);">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            سلم الرواتب 1448 / 1447 (2026): اختر الكادر والمرتبة والدرجة
           </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="form-label" for="cadreSelect" style="font-size: 0.86rem;">اختر الكادر الوظيفي:</label>
+            <select id="cadreSelect" class="input-control">
+              <option value="military_enlisted" selected>سلم رواتب الأفراد العسكريين</option>
+              <option value="military_officers">سلم رواتب الضباط العسكريين</option>
+              <option value="civil_general">سلم رواتب الموظفين العام (الخدمة المدنية)</option>
+              <option value="health_cadre">سلم رواتب الوظائف الصحية</option>
+            </select>
+          </div>
+
           <div class="form-row">
             <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">الرتبة العسكرية:</label>
+              <label class="form-label" id="rankOrGradeLabel" for="militaryRank" style="font-size: 0.86rem;">الرتبة العسكرية للأفراد:</label>
               <select id="militaryRank" class="input-control">
-                <option value="3220,130,5040" data-rank="جندي" selected>جندي</option>
-                <option value="3395,145,5425" data-rank="جندي أول">جندي أول</option>
-                <option value="3765,175,6215" data-rank="عريف">عريف</option>
-                <option value="4455,210,7395" data-rank="وكيل رقيب">وكيل رقيب</option>
-                <option value="5260,250,8760" data-rank="رقيب">رقيب</option>
-                <option value="6180,300,10380" data-rank="رقيب أول">رقيب أول</option>
-                <option value="7215,360,12255" data-rank="رئيس رقباء">رئيس رقباء</option>
+                <!-- Dynamically filled based on cadreSelect -->
               </select>
             </div>
             <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">الدرجة الحالية (1 - 15):</label>
+              <label class="form-label" for="salaryGrade" style="font-size: 0.86rem;">الدرجة (1 - 15):</label>
               <select id="salaryGrade" class="input-control">
                 <!-- Dynamically filled with grades 1 through 15 -->
               </select>
@@ -1363,7 +1368,71 @@
     salaryGradeSelect.appendChild(opt);
   }
 
+  // Cadres Data for سلم الرواتب 1447 / 1448 (2026)
+  const cadresData = {
+    military_enlisted: {
+      label: "الرتبة العسكرية للأفراد:",
+      ranks: [
+        { name: "جندي", baseStart: 3220, step: 130, lastGrade: 5040, transport: 500 },
+        { name: "جندي أول", baseStart: 3395, step: 145, lastGrade: 5425, transport: 500 },
+        { name: "عريف", baseStart: 3765, step: 175, lastGrade: 6215, transport: 500 },
+        { name: "وكيل رقيب", baseStart: 4455, step: 210, lastGrade: 7395, transport: 500 },
+        { name: "رقيب", baseStart: 5260, step: 250, lastGrade: 8760, transport: 500 },
+        { name: "رقيب أول", baseStart: 6180, step: 300, lastGrade: 10380, transport: 700 },
+        { name: "رئيس رقباء", baseStart: 7215, step: 360, lastGrade: 12255, transport: 700 }
+      ]
+    },
+    military_officers: {
+      label: "رتبة الضباط العسكريين:",
+      ranks: [
+        { name: "ملازم", baseStart: 7590, step: 380, lastGrade: 12910, transport: 700 },
+        { name: "ملازم أول", baseStart: 8835, step: 440, lastGrade: 14995, transport: 700 },
+        { name: "نقيب", baseStart: 10600, step: 495, lastGrade: 17530, transport: 700 },
+        { name: "رائد", baseStart: 13515, step: 265, lastGrade: 17225, transport: 700 },
+        { name: "مقدم", baseStart: 14645, step: 470, lastGrade: 21225, transport: 700 },
+        { name: "عقيد", baseStart: 16520, step: 590, lastGrade: 24780, transport: 700 },
+        { name: "عميد", baseStart: 18805, step: 650, lastGrade: 27905, transport: 900 },
+        { name: "لواء", baseStart: 21390, step: 730, lastGrade: 31610, transport: 900 }
+      ]
+    },
+    civil_general: {
+      label: "المرتبة في سلم الموظفين العام:",
+      ranks: [
+        { name: "المرتبة 1", baseStart: 3000, step: 135, lastGrade: 4890, transport: 500 },
+        { name: "المرتبة 2", baseStart: 3430, step: 165, lastGrade: 5740, transport: 500 },
+        { name: "المرتبة 3", baseStart: 3945, step: 190, lastGrade: 6605, transport: 500 },
+        { name: "المرتبة 4", baseStart: 4530, step: 230, lastGrade: 7750, transport: 500 },
+        { name: "المرتبة 5", baseStart: 5240, step: 265, lastGrade: 8950, transport: 500 },
+        { name: "المرتبة 6", baseStart: 6065, step: 305, lastGrade: 10335, transport: 700 },
+        { name: "المرتبة 7", baseStart: 7010, step: 365, lastGrade: 12120, transport: 700 },
+        { name: "المرتبة 8", baseStart: 8010, step: 415, lastGrade: 13820, transport: 700 },
+        { name: "المرتبة 9", baseStart: 9275, step: 470, lastGrade: 15855, transport: 700 },
+        { name: "المرتبة 10", baseStart: 10275, step: 510, lastGrade: 17415, transport: 700 },
+        { name: "المرتبة 11", baseStart: 11815, step: 530, lastGrade: 19235, transport: 900 },
+        { name: "المرتبة 12", baseStart: 13435, step: 570, lastGrade: 21415, transport: 900 },
+        { name: "المرتبة 13", baseStart: 15180, step: 605, lastGrade: 23650, transport: 900 },
+        { name: "المرتبة 14", baseStart: 17015, step: 700, lastGrade: 26815, transport: 900 },
+        { name: "المرتبة 15", baseStart: 20855, step: 865, lastGrade: 32965, transport: 900 }
+      ]
+    },
+    health_cadre: {
+      label: "الفئة في سلم الوظائف الصحية:",
+      ranks: [
+        { name: "طبيب استشاري", baseStart: 17645, step: 695, lastGrade: 27375, transport: 900 },
+        { name: "طبيب نائب", baseStart: 13205, step: 555, lastGrade: 20975, transport: 900 },
+        { name: "طبيب مقيم", baseStart: 10860, step: 495, lastGrade: 17790, transport: 700 },
+        { name: "أخصائي استشاري", baseStart: 12435, step: 510, lastGrade: 19575, transport: 700 },
+        { name: "أخصائي أول", baseStart: 10365, step: 440, lastGrade: 16525, transport: 700 },
+        { name: "أخصائي", baseStart: 8415, step: 410, lastGrade: 14155, transport: 700 },
+        { name: "فني صحي", baseStart: 5840, step: 360, lastGrade: 10880, transport: 500 },
+        { name: "مساعد صحي", baseStart: 4780, step: 295, lastGrade: 8910, transport: 500 }
+      ]
+    }
+  };
+
   // DOM Elements
+  const cadreSelect = document.getElementById('cadreSelect');
+  const rankOrGradeLabel = document.getElementById('rankOrGradeLabel');
   const rankSelect = document.getElementById('militaryRank');
   const gradeSelect = document.getElementById('salaryGrade');
   const baseSalaryInput = document.getElementById('baseSalary');
@@ -1424,24 +1493,45 @@
     return Math.round(amount).toLocaleString('en-US');
   }
 
-  // Check if a rank is Raqib Awwal or higher
-  function isSeniorRank() {
-    const selectedRankName = rankSelect.options[rankSelect.selectedIndex].getAttribute('data-rank');
-    return (selectedRankName === 'رقيب أول' || selectedRankName === 'رئيس رقباء');
+  // Get Transport Allowance based on selected rank/grade in Cadre
+  function getSelectedTransport() {
+    if (!rankSelect.options || rankSelect.selectedIndex < 0) return 500;
+    const opt = rankSelect.options[rankSelect.selectedIndex];
+    if (opt && opt.dataset.transport) {
+      return parseInt(opt.dataset.transport, 10);
+    }
+    return 500;
+  }
+
+  // Populate ranks/grades based on selected Cadre
+  function populateRanksForCadre(cadreKey) {
+    const cadre = cadresData[cadreKey] || cadresData.military_enlisted;
+    if (rankOrGradeLabel) rankOrGradeLabel.textContent = cadre.label;
+    rankSelect.innerHTML = '';
+    cadre.ranks.forEach((r, idx) => {
+      const opt = document.createElement('option');
+      opt.value = `${r.baseStart},${r.step},${r.lastGrade}`;
+      opt.dataset.rank = r.name;
+      opt.dataset.transport = r.transport;
+      opt.textContent = r.name;
+      if (idx === 0) opt.selected = true;
+      rankSelect.appendChild(opt);
+    });
+    updateFromPresets();
   }
 
   // Update base salary & tags based on preset
   function updateFromPresets() {
+    if (!rankSelect.value) return;
     const [baseStart, step, lastGrade] = rankSelect.value.split(',').map(Number);
-    const grade = parseInt(gradeSelect.value, 10);
+    const grade = parseInt(gradeSelect.value, 10) || 1;
     const calculatedSalary = baseStart + ((grade - 1) * step);
     baseSalaryInput.value = calculatedSalary;
 
     // Update Transport tag
-    if (isSeniorRank()) {
-      transportTag.textContent = '700 ريال';
-    } else {
-      transportTag.textContent = '500 ريال';
+    const transVal = getSelectedTransport();
+    if (transportTag) {
+      transportTag.textContent = `${transVal} ريال`;
     }
 
     // Update Security Allowance Tag (25% of current base salary - ربع الراتب الأساسي)
@@ -1500,9 +1590,9 @@
     // 3. بدل إعاشة إضافية (500)
     if (document.getElementById('allowanceExtraLiving').checked) allowancesTotal += 500;
 
-    // 4. بدل النقل (500، ولرقيب أول وأعلى 700)
+    // 4. بدل النقل
     if (document.getElementById('allowanceTransport').checked) {
-      allowancesTotal += isSeniorRank() ? 700 : 500;
+      allowancesTotal += getSelectedTransport();
     }
 
     // 5. بدل يومية الميدان (450)
@@ -1725,13 +1815,19 @@
     box.addEventListener('change', calculateAll);
   });
 
+  // Cadre change listener
+  cadreSelect.addEventListener('change', () => {
+    populateRanksForCadre(cadreSelect.value);
+  });
+
   // Rank / Grade
   rankSelect.addEventListener('change', updateFromPresets);
   gradeSelect.addEventListener('change', updateFromPresets);
 
   // Reset Button
   document.getElementById('resetBtn').addEventListener('click', () => {
-    rankSelect.selectedIndex = 0;
+    cadreSelect.selectedIndex = 0;
+    populateRanksForCadre('military_enlisted');
     gradeSelect.selectedIndex = 0;
     eduBonusSelect.selectedIndex = 3; // ثانوي 300
     customAllowanceInput.value = 0;
@@ -1775,7 +1871,7 @@
   });
 
   // Init
-  updateFromPresets();
+  populateRanksForCadre('military_enlisted');
 </script>
 </body>
 </html>
