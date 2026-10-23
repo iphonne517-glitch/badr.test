@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حاسبة راتب التقاعد العسكري والمكافآت للأفراد | تصميم ابو ساهر الشافعي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1b4332;
+      --primary-light: #2d6a4f;
+      --primary-dark: #081c15;
+      --accent: #d4a373;
+      --accent-hover: #bc8a5f;
+      --gold: #c59b27;
+      --gold-light: #fef9e7;
+      --bg-body: #f3f6f4;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8faf9;
+      --border-color: #dbe4de;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      --danger: #dc2626;
+      --danger-bg: #fef2f2;
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --warning: #f59e0b;
+      --warning-bg: #fffbeb;
+      --info: #0284c7;
+      --info-bg: #f0f9ff;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 25px -5px rgba(27, 67, 50, 0.12), 0 8px 10px -6px rgba(27, 67, 50, 0.08);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --font-main: 'Cairo', sans-serif;
+      --transition: all 0.25s ease-in-out;
+    }
+
+    [data-theme="dark"] {
+      --bg-body: #0a130f;
+      --bg-card: #132219;
+      --bg-subtle: #192c21;
+      --border-color: #264232;
+      --text-main: #f1f5f3;
+      --text-muted: #9bb0a5;
+      --text-light: #647c70;
+      --gold-light: #262412;
+      --info-bg: #0c2333;
+      --shadow-lg: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-main);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px 14px 60px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1220px;
+      margin: 0 auto;
+    }
+
+    /* Disclaimer Banner Top */
+    .disclaimer-banner {
+      background: var(--gold-light);
+      border: 1px solid rgba(197, 155, 39, 0.4);
+      border-radius: var(--radius-sm);
+      padding: 10px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #854d0e;
+      text-align: center;
+    }
+
+    [data-theme="dark"] .disclaimer-banner {
+      color: #fef08a;
+      border-color: rgba(234, 179, 8, 0.3);
+    }
+
+    /* Header Styling */
+    .app-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 65%, #184e36 100%);
+      color: #ffffff;
+      padding: 32px 26px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 25px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .app-header::after {
+      content: "";
+      position: absolute;
+      top: -40%;
+      left: -8%;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(212, 163, 115, 0.22) 0%, transparent 70%);
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .badge-tag {
+      background-color: rgba(212, 163, 115, 0.22);
+      color: #ffe8cc;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(212, 163, 115, 0.35);
+    }
+
+    .author-badge {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .theme-toggle-btn {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      padding: 7px 14px;
+      border-radius: 30px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .theme-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .app-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+
+    .app-subtitle {
+      font-size: 0.94rem;
+      color: #d5e9df;
+      max-width: 820px;
+      line-height: 1.65;
+    }
+
+    /* Main Grid Layout */
+    .calculator-layout {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 25px;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .calculator-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      padding: 22px;
+      margin-bottom: 22px;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1.5px solid var(--border-color);
+    }
+
+    .card-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(27, 67, 50, 0.08);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    [data-theme="dark"] .card-icon {
+      background: rgba(45, 106, 79, 0.25);
+      color: #a7f3d0;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .card-subtitle {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .form-label small {
+      font-weight: 500;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .input-control, select.input-control {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-card);
+      color: var(--text-main);
+      font-size: 0.93rem;
+      font-weight: 600;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .input-control:focus, select.input-control:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(27, 67, 50, 0.15);
+    }
+
+    .input-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-group .input-control {
+      padding-left: 55px;
+    }
+
+    .input-suffix {
+      position: absolute;
+      left: 14px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      pointer-events: none;
+    }
+
+    /* Presets Box */
+    .preset-box {
+      background: var(--bg-subtle);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      border: 1px dashed var(--border-color);
+      margin-bottom: 16px;
+    }
+
+    .preset-title {
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--primary-light);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    [data-theme="dark"] .preset-title {
+      color: #93c5fd;
+    }
+
+    /* Duration Box */
+    .duration-display-box {
+      background: linear-gradient(135deg, rgba(27,67,50,0.06), rgba(45,106,79,0.09));
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .duration-total {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    [data-theme="dark"] .duration-total {
+      color: #6ee7b7;
+    }
+
+    /* Allowances Grid & Items */
+    .allowance-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 650px) {
+      .allowance-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .allowance-item {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      padding: 11px 13px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .allowance-item:hover {
+      border-color: var(--primary-light);
+    }
+
+    .allowance-item input[type="checkbox"] {
+      accent-color: var(--primary);
+      width: 19px;
+      height: 19px;
+      cursor: pointer;
+      margin-top: 3px;
+    }
+
+    .allowance-info {
+      flex: 1;
+    }
+
+    .allowance-name {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .allowance-val {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .allowance-calc-tag {
+      background: rgba(27,67,50,0.09);
+      color: var(--primary);
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
+    [data-theme="dark"] .allowance-calc-tag {
+      background: rgba(45,106,79,0.3);
+      color: #86efac;
+    }
+
+    /* Mode Selection for End of Service Salary */
+    .calc-mode-selector {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-bottom: 16px;
+    }
+
+    .calc-mode-radios {
+      display: flex;
+      gap: 18px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .radio-option input[type="radio"] {
+      accent-color: var(--primary);
+      width: 17px;
+      height: 17px;
+    }
+
+    /* Results Column */
+    .results-wrapper {
+      position: sticky;
+      top: 20px;
+    }
+
+    .main-result-hero {
+      background: linear-gradient(145deg, #143526 0%, #0a1c14 100%);
+      color: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 24px 22px;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .main-result-hero::before {
+      content: "";
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(212, 163, 115, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .status-qualified {
+      background-color: rgba(34, 197, 94, 0.22);
+      color: #86efac;
+      border: 1px solid rgba(34, 197, 94, 0.45);
+    }
+
+    .status-lump {
+      background-color: rgba(245, 158, 11, 0.22);
+      color: #fde68a;
+      border: 1px solid rgba(245, 158, 11, 0.45);
+    }
+
+    .main-amount-label {
+      font-size: 0.88rem;
+      color: #cbd5e1;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .main-amount-value {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .main-amount-currency {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-right: 4px;
+    }
+
+    .percentage-bar-container {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .bar-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      margin-bottom: 6px;
+      color: #cbd5e1;
+    }
+
+    .progress-bar-bg {
+      height: 9px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #d4a373, #4ade80);
+      width: 0%;
+      border-radius: 6px;
+      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Breakdown Grid */
+    .breakdown-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 11px;
+      margin-bottom: 18px;
+    }
+
+    .breakdown-item {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .breakdown-item:hover {
+      background: var(--bg-card);
+      border-color: rgba(27, 67, 50, 0.35);
+    }
+
+    .breakdown-label {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .breakdown-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      direction: ltr;
+      text-align: left;
+    }
+
+    .breakdown-val.highlight {
+      color: var(--primary);
+    }
+
+    [data-theme="dark"] .breakdown-val.highlight {
+      color: #6ee7b7;
+    }
+
+    /* Comparison Box */
+    .comparison-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .comparison-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+
+    .comp-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .comp-card {
+      padding: 11px 8px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+    }
+
+    .comp-card.active-sal {
+      background: rgba(2, 132, 199, 0.05);
+      border-color: rgba(2, 132, 199, 0.2);
+    }
+
+    .comp-card.retire-sal {
+      background: rgba(22, 163, 74, 0.05);
+      border-color: rgba(22, 163, 74, 0.2);
+    }
+
+    .comp-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .comp-num {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .diff-badge {
+      display: inline-block;
+      margin-top: 7px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 12px;
+      background: var(--danger-bg);
+      color: var(--danger);
+    }
+
+    /* Info Alert */
+    .info-alert {
+      background: var(--info-bg);
+      border: 1px solid rgba(2, 132, 199, 0.3);
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      display: flex;
+      gap: 12px;
+      font-size: 0.84rem;
+      color: #0369a1;
+      line-height: 1.55;
+    }
+
+    [data-theme="dark"] .info-alert {
+      color: #7dd3fc;
+      border-color: rgba(2, 132, 199, 0.4);
+    }
+
+    .info-alert svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Buttons */
+    .action-btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .btn {
+      padding: 12px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-outline:hover {
+      background: var(--bg-subtle);
+      border-color: var(--primary);
+    }
+
+    /* Footer & Signature Card */
+    .app-footer {
+      margin-top: 35px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .designer-tag {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    [data-theme="dark"] .designer-tag {
+      color: #86efac;
+    }
+
+    .official-disclaimer {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #854d0e;
+      background: var(--gold-light);
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(197, 155, 39, 0.3);
+      margin-top: 6px;
+    }
+
+    [data-theme="dark"] .official-disclaimer {
+      color: #fef08a;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+        padding: 0;
+      }
+      .calculator-layout {
+        display: block;
+      }
+      .action-btn-group, .theme-toggle-btn, .preset-box, .disclaimer-banner {
+        display: none !important;
+      }
+      .card, .main-result-hero {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        page-break-inside: avoid;
+      }
+      .main-result-hero {
+        background: #f8faf9 !important;
+        color: #000 !important;
+      }
+      .main-amount-value, .status-pill, .main-amount-label {
+        color: #000 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Top Official Note -->
+  <div class="disclaimer-banner">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+    <span>حاسبة استرشادية، والمرجع النهائي هو الأنظمة والتعاميم الرسمية.</span>
+  </div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-top">
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <span class="badge-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          نظام خدمة وتقاعد الأفراد العسكريين
+        </span>
+        <span class="author-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          إعداد وتصميم : ابو ساهر الشافعي
+        </span>
+      </div>
+
+      <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="تبديل النمط">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span id="themeText">الوضع الليلي</span>
+      </button>
+    </div>
+
+    <h1 class="app-title">
+      <svg width="34" height="34" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+      حاسبة راتب التقاعد ومكافآت نهاية الخدمة للعسكر
+    </h1>
+    <p class="app-subtitle">
+      حاسبة متكاملة تشمل حساب الراتب الشامل للتعويضات، رصيد الإجازات، تعويض التأهب، مكافأة نهاية الخدمة، تسليم العهدة، والمعاش التقاعدي مع ضبط البدلات الرسمية ومكافآت الشهادات.
+    </p>
+  </header>
+
+  <!-- Main Calculator Grid -->
+  <div class="calculator-layout">
+
+    <!-- Inputs Column -->
+    <div class="calculator-form">
+
+      <!-- Rank & Base Salary Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div>
+            <h2 class="card-title">الرتبة والراتب الأساسي</h2>
+            <p class="card-subtitle">حدد رتبتك ودرجتك الحالية لتعبئة السلم الأساسي تلقائياً</p>
+          </div>
+        </div>
+
+        <!-- Presets Row: سلم الرواتب 1447 / 1448 (2026) -->
+        <div class="preset-box" style="border: 1.5px solid rgba(27, 67, 50, 0.25); background: var(--bg-subtle);">
+          <div class="preset-title" style="font-size: 0.92rem; font-weight: 800; color: var(--primary);">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            سلم الرواتب 1448 / 1447 (2026): اختر الكادر والمرتبة والدرجة
+          </div>
+
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="form-label" for="cadreSelect" style="font-size: 0.86rem;">اختر الكادر الوظيفي:</label>
+            <select id="cadreSelect" class="input-control">
+              <option value="military_enlisted" selected>سلم رواتب الأفراد العسكريين</option>
+              <option value="military_officers">سلم رواتب الضباط العسكريين</option>
+              <option value="civil_general">سلم رواتب الموظفين العام (الخدمة المدنية)</option>
+              <option value="health_cadre">سلم رواتب الوظائف الصحية</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" id="rankOrGradeLabel" for="militaryRank" style="font-size: 0.86rem;">الرتبة العسكرية للأفراد:</label>
+              <select id="militaryRank" class="input-control">
+                <!-- Dynamically filled based on cadreSelect -->
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label" for="salaryGrade" style="font-size: 0.86rem;">الدرجة (1 - 15):</label>
+              <select id="salaryGrade" class="input-control">
+                <!-- Dynamically filled with grades 1 through 15 -->
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="baseSalary">
+            آخر راتب أساسي تقاضاه الفرد:
+            <small>(المعتمد لحساب المعاش التقاعدي وفق المعادلة)</small>
+          </label>
+          <div class="input-group">
+            <input type="number" id="baseSalary" class="input-control" value="3220" min="1000" max="60000" step="5">
+            <span class="input-suffix">ريال</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Allowances Card (البدلات أثناء الخدمة) -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <h2 class="card-title">البدلات والمكافآت أثناء الخدمة</h2>
+            <p class="card-subtitle">تحدد الراتب الشامل والصافي للمقارنة ولحساب التعويضات</p>
+          </div>
+        </div>
+
+        <!-- الشهادات العلمية -->
+        <div class="form-group">
+          <label class="form-label" for="eduBonus">مكافأة الشهادات العلمية:</label>
+          <select id="eduBonus" class="input-control">
+            <option value="0">بدون شهادة / لا ينطبق (0 ريال)</option>
+            <option value="200">شهادة ابتدائي (200 ريال)</option>
+            <option value="250">شهادة متوسط / كفاءة (250 ريال)</option>
+            <option value="300" selected>شهادة ثانوي (300 ريال)</option>
+          </select>
+        </div>
+
+        <!-- شبكة البدلات المعدلة -->
+        <div class="allowance-grid">
+          <label class="allowance-item">
+            <input type="checkbox" id="allowanceLiving" checked data-amount="500">
+            <div class="allowance-info">
+              <div class="allowance-name">
+                <span>بدل إعاشة</span>
+                <span class="allowance-calc-tag">500 ريال</span>
+              </div>
+              <div class="allowance-val">بدل الإعاشة الأساسي</div>
+            </div>
+          </label>
+
+          <label class="allowance-item">
+            <input type="checkbox" id="allowanceExtraLiving" checked data-amount="500">
+            <div class="allowance-info">
+              <div class="allowance-name">
+                <span>بدل إعاشة إضافية</span>
+                <span class="allowance-calc-tag">500 ريال</span>
+              </div>
+              <div class="allowance-val">إعاشة إضافية شهرية</div>
+            </div>
+          </label>
+
+          <label class="allowance-item">
+            <input type="checkbox" id="allowanceTransport" checked>
+            <div class="allowance-info">
+              <div class="allowance-name">
+                <span>بدل النقل</span>
+                <span class="allowance-calc-tag" id="transportTag">500 ريال</span>
+              </div>
+              <div class="allowance-val">500 ريال (رقيب أول فأعلى 700 ريال)</div>
+            </div>
+          </label>
+
+          <label class="allowance-item">
+            <input type="checkbox" id="allowanceField" checked data-amount="450">
+            <div class="allowance-info">
+              <div class="allowance-name">
+                <span>بدل يومية الميدان</span>
+                <span class="allowance-calc-tag">450 ريال</span>
+              </div>
+              <div class="allowance-val">يومية الميدان الشهرية</div>
+            </div>
+          </label>
+
+          <label class="allowance-item">
+            <input type="checkbox" id="allowanceRemote">
+            <div class="allowance-info">
+              <div class="allowance-name">
+                <span>بدل المناطق النائية</span>
+                <span class="allowance-calc-tag" id="remoteTag">11%</span>
+              </div>
+              <div class="allowance-val">11% من أول مربوط للرتبة</div>
+            </div>
+          </label>
+
+          <label class="allowance-item">
+            <input type="checkbox" id="allowanceSecurity" checked>
+            <div class="allowance-info">
+              <div class="allowance-name">
+                <span>علاوة أمن</span>
+                <span class="allowance-calc-tag" id="securityTag">25%</span>
+              </div>
+              <div class="allowance-val">25% (ربع الراتب الأساسي)</div>
+            </div>
+          </label>
+
+          <label class="allowance-item">
+            <input type="checkbox" id="allowanceDanger" checked data-amount="600">
+            <div class="allowance-info">
+              <div class="allowance-name">
+                <span>بدل خطر</span>
+                <span class="allowance-calc-tag">600 ريال</span>
+              </div>
+              <div class="allowance-val">بدل الخطورة الشهري</div>
+            </div>
+          </label>
+
+          <label class="allowance-item">
+            <input type="checkbox" id="allowanceTerror">
+            <div class="allowance-info">
+              <div class="allowance-name">
+                <span>مكافحة الإرهاب</span>
+                <span class="allowance-calc-tag" id="terrorTag">25%</span>
+              </div>
+              <div class="allowance-val">25% من الراتب الأساسي لأول مربوط</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="form-group" style="margin-top:14px; margin-bottom:0;">
+          <label class="form-label" for="customAllowance">بدلات أو علاوات أخرى إضافية:</label>
+          <div class="input-group">
+            <input type="number" id="customAllowance" class="input-control" value="0" min="0" step="50">
+            <span class="input-suffix">ريال</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- End of Service Compensation Card (مكافأة نهاية الخدمة والتعويضات للعسكر) -->
+      <div class="card" style="border: 1.5px solid rgba(27, 67, 50, 0.35);">
+        <div class="card-header">
+          <div class="card-icon" style="background:rgba(212, 163, 115, 0.2); color:#854d0e;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <div>
+            <h2 class="card-title">مكافأة نهاية الخدمة والتعويضات للعسكر</h2>
+            <p class="card-subtitle">احتساب رصيد الإجازات، التأهب، مكافأة نهاية الخدمة، وتسليم العهدة</p>
+          </div>
+        </div>
+
+        <!-- راتب التعويضات واختيار نوعه -->
+        <div class="calc-mode-selector">
+          <label class="form-label">الراتب المعتمد لاحتساب التعويضات والمكافآت:</label>
+          <div class="calc-mode-radios">
+            <label class="radio-option">
+              <input type="radio" name="compBaseMode" value="total" checked id="modeTotal">
+              <span>الراتب الشامل للتعويضات (الأساسي + البدلات)</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="compBaseMode" value="base" id="modeBase">
+              <span>الراتب الأساسي فقط</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="compSalaryInput">
+            الراتب المعتمد للتعويضات:
+            <small>(يحدث تلقائياً حسب اختيارك أو يمكنك تعديله يدوياً)</small>
+          </label>
+          <div class="input-group">
+            <input type="number" id="compSalaryInput" class="input-control" value="0" min="1000" step="50">
+            <span class="input-suffix">ريال</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="leaveBalance">
+              رصيد الإجازات:
+              <small>(المستحق صرفه)</small>
+            </label>
+            <div class="input-group">
+              <input type="number" id="leaveBalance" class="input-control" value="180" min="0" max="360">
+              <span class="input-suffix">يوم</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="readinessDays">
+              بدل التأهب:
+              <small>(المستحق صرفه)</small>
+            </label>
+            <div class="input-group">
+              <input type="number" id="readinessDays" class="input-control" value="120" min="0" max="360">
+              <span class="input-suffix">يوم</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="endServiceSalariesCount">
+              مكافأة نهاية الخدمة:
+              <small>(عدد الرواتب المستحقة)</small>
+            </label>
+            <div class="input-group">
+              <input type="number" id="endServiceSalariesCount" class="input-control" value="6" min="0" max="24">
+              <span class="input-suffix">رواتب</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="custodySalariesCount">
+              تسليم العهدة:
+              <small>(عدد الرواتب المستحقة)</small>
+            </label>
+            <div class="input-group">
+              <input type="number" id="custodySalariesCount" class="input-control" value="2" min="0" max="12">
+              <span class="input-suffix">رواتب</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Service Duration Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <h2 class="card-title">مدة الخدمة وسبب التقاعد</h2>
+            <p class="card-subtitle">الخدمة العسكرية المحتسبة لتحديد المعاش التقاعدي الشهري</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="serviceYears">سنوات الخدمة الفعلية:</label>
+            <div class="input-group">
+              <input type="number" id="serviceYears" class="input-control" value="20" min="0" max="45">
+              <span class="input-suffix">سنة</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="serviceMonths">أشهر إضافية:</label>
+            <div class="input-group">
+              <input type="number" id="serviceMonths" class="input-control" value="0" min="0" max="11">
+              <span class="input-suffix">شهر</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="extraServiceMonths">
+            خدمة إضافية محتسبة بالتقاعد (عمليات حربية / نائية):
+          </label>
+          <div class="input-group">
+            <input type="number" id="extraServiceMonths" class="input-control" value="0" min="0" max="180">
+            <span class="input-suffix">شهر</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="retirementReason">حالة وسبب إنهاء الخدمة:</label>
+          <select id="retirementReason" class="input-control">
+            <option value="normal_age" selected>بلوغ السن النظامي للتقاعد (حسب الرتبة)</option>
+            <option value="early_request">تقاعد مبكر بناءً على طلب الفرد (18 سنة فأكثر)</option>
+            <option value="medical_disability">عجز صحي كلي أو جزئي بسبب الخدمة</option>
+            <option value="war_disability">عجز كلي أو استشهاد في العمليات الحربية أو مكافحة الإرهاب</option>
+            <option value="non_disciplinary">إنهاء خدمة لغير سبب تأديبي / إلغاء الوظيفة</option>
+            <option value="other_termination">إنهاء خدمة لأسباب أخرى / فصل</option>
+          </select>
+        </div>
+
+        <div class="duration-display-box">
+          <span style="font-size:0.9rem; font-weight:700;">إجمالي الخدمة المحتسبة للتقاعد:</span>
+          <span class="duration-total" id="totalServiceDisplay">20 سنة (240 شهراً)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Results Column -->
+    <div class="results-wrapper">
+
+      <!-- Hero Card: Primary Result -->
+      <div class="main-result-hero">
+        <div id="eligibilityBadge" class="status-pill status-qualified">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span id="eligibilityText">مستحق لمعاش تقاعدي شهري</span>
+        </div>
+
+        <div class="main-amount-label" id="mainResultTitle">المعاش التقاعدي الشهري التقديري:</div>
+        <div class="main-amount-value">
+          <span id="pensionAmount">0</span>
+          <span class="main-amount-currency">ريال / شهر</span>
+        </div>
+
+        <div class="percentage-bar-container" id="percentageContainer">
+          <div class="bar-info">
+            <span>نسبة الاستحقاق من الراتب الأساسي:</span>
+            <span id="pensionPercentageText">0%</span>
+          </div>
+          <div class="progress-bar-bg">
+            <div id="percentageBar" class="progress-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Military End of Service Breakdown -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon" style="background:rgba(212, 163, 115, 0.15); color:var(--primary);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="6" y1="8" x2="6" y2="8"/><line x1="10" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="6" y2="12"/><line x1="10" y1="12" x2="18" y2="12"/><line x1="6" y1="16" x2="6" y2="16"/><line x1="10" y1="16" x2="18" y2="16"/></svg>
+          </div>
+          <div>
+            <h3 class="card-title">مستحقات ومكافآت نهاية الخدمة</h3>
+            <p class="card-subtitle">المبالغ المقطوعة المستلمة لمرة واحدة عند انتهاء الخدمة</p>
+          </div>
+        </div>
+
+        <div class="breakdown-grid">
+          <div class="breakdown-item">
+            <span class="breakdown-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              تعويض رصيد الإجازات (<span id="leaveDaysCountDisplay">180</span> يوم):
+            </span>
+            <span class="breakdown-val" id="leaveCompensation">0 ريال</span>
+          </div>
+
+          <div class="breakdown-item">
+            <span class="breakdown-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              تعويض التأهب (<span id="readinessDaysCountDisplay">120</span> يوم):
+            </span>
+            <span class="breakdown-val" id="readinessCompensation">0 ريال</span>
+          </div>
+
+          <div class="breakdown-item">
+            <span class="breakdown-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              مكافأة نهاية الخدمة (<span id="endServiceSalariesCountDisplay">6</span> رواتب):
+            </span>
+            <span class="breakdown-val" id="endServiceReward">0 ريال</span>
+          </div>
+
+          <div class="breakdown-item">
+            <span class="breakdown-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              تسليم العهدة (<span id="custodySalariesCountDisplay">2</span> راتب):
+            </span>
+            <span class="breakdown-val" id="custodyReward">0 ريال</span>
+          </div>
+
+          <div class="breakdown-item" id="lumpSumRow" style="display:none;">
+            <span class="breakdown-label">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              مكافأة تصفية الخدمة (عدم استحقاق معاش):
+            </span>
+            <span class="breakdown-val" id="endServiceBonus">0 ريال</span>
+          </div>
+
+          <div class="breakdown-item" style="background: rgba(27,67,50,0.07); border-color: var(--primary);">
+            <span class="breakdown-label" style="font-weight:800; color:var(--text-main);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+              إجمالي المكافآت والتعويضات المقطوعة:
+            </span>
+            <span class="breakdown-val highlight" id="totalLumpSum">0 ريال</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Income Gap Comparison -->
+      <div class="comparison-box">
+        <div class="comparison-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          مقارنة الدخل (أثناء الخدمة مقابل المعاش التقاعدي)
+        </div>
+
+        <div class="comp-columns">
+          <div class="comp-card active-sal">
+            <div class="comp-name">صافي الراتب أثناء الخدمة</div>
+            <div class="comp-num" id="currentNetSalary">0 ريال</div>
+            <small style="color:var(--text-muted); font-size:0.75rem;">(أساسي + بدلات - 9% تقاعد)</small>
+          </div>
+
+          <div class="comp-card retire-sal">
+            <div class="comp-name">المعاش التقاعدي الصافي</div>
+            <div class="comp-num" id="pensionNetSalary">0 ريال</div>
+            <small style="color:var(--text-muted); font-size:0.75rem;">(يصرف صافياً بدون حسم)</small>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top:10px;">
+          <span class="diff-badge" id="incomeDifference">الفارق الشهري: 0 ريال</span>
+        </div>
+      </div>
+
+      <!-- Notes Box -->
+      <div class="info-alert" id="systemNoteBox">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <div id="systemNoteText">
+          يحسب المعاش التقاعدي وفق المعادلة النظامية: (الراتب الأساسي الأخير × عدد سنوات الخدمة المحتسبة) ÷ 35.
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="action-btn-group">
+        <button type="button" class="btn btn-primary" onclick="window.print()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          طباعة التقرير
+        </button>
+        <button type="button" class="btn btn-outline" id="resetBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+          إعادة تعيين
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Footer with Designer Credit & Disclaimer -->
+  <footer class="app-footer">
+    <div class="designer-tag">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      اعداد وتصميم : ابو ساهر الشافعي
+    </div>
+    <br>
+    <div class="official-disclaimer">
+      حاسبة استرشادية، والمرجع النهائي هو الأنظمة والتعاميم الرسمية.
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Populate Grade options 1 through 15
+  const salaryGradeSelect = document.getElementById('salaryGrade');
+  for (let i = 1; i <= 15; i++) {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `الدرجة ${i}`;
+    salaryGradeSelect.appendChild(opt);
+  }
+
+  // Cadres Data for سلم الرواتب 1447 / 1448 (2026)
+  const cadresData = {
+    military_enlisted: {
+      label: "الرتبة العسكرية للأفراد:",
+      ranks: [
+        { name: "جندي", baseStart: 3220, step: 130, lastGrade: 5040, transport: 500 },
+        { name: "جندي أول", baseStart: 3395, step: 145, lastGrade: 5425, transport: 500 },
+        { name: "عريف", baseStart: 3765, step: 175, lastGrade: 6215, transport: 500 },
+        { name: "وكيل رقيب", baseStart: 4455, step: 210, lastGrade: 7395, transport: 500 },
+        { name: "رقيب", baseStart: 5260, step: 250, lastGrade: 8760, transport: 500 },
+        { name: "رقيب أول", baseStart: 6180, step: 300, lastGrade: 10380, transport: 700 },
+        { name: "رئيس رقباء", baseStart: 7215, step: 360, lastGrade: 12255, transport: 700 }
+      ]
+    },
+    military_officers: {
+      label: "رتبة الضباط العسكريين:",
+      ranks: [
+        { name: "ملازم", baseStart: 7590, step: 380, lastGrade: 12910, transport: 700 },
+        { name: "ملازم أول", baseStart: 8835, step: 440, lastGrade: 14995, transport: 700 },
+        { name: "نقيب", baseStart: 10600, step: 495, lastGrade: 17530, transport: 700 },
+        { name: "رائد", baseStart: 13515, step: 265, lastGrade: 17225, transport: 700 },
+        { name: "مقدم", baseStart: 14645, step: 470, lastGrade: 21225, transport: 700 },
+        { name: "عقيد", baseStart: 16520, step: 590, lastGrade: 24780, transport: 700 },
+        { name: "عميد", baseStart: 18805, step: 650, lastGrade: 27905, transport: 900 },
+        { name: "لواء", baseStart: 21390, step: 730, lastGrade: 31610, transport: 900 }
+      ]
+    },
+    civil_general: {
+      label: "المرتبة في سلم الموظفين العام:",
+      ranks: [
+        { name: "المرتبة 1", baseStart: 3000, step: 135, lastGrade: 4890, transport: 500 },
+        { name: "المرتبة 2", baseStart: 3430, step: 165, lastGrade: 5740, transport: 500 },
+        { name: "المرتبة 3", baseStart: 3945, step: 190, lastGrade: 6605, transport: 500 },
+        { name: "المرتبة 4", baseStart: 4530, step: 230, lastGrade: 7750, transport: 500 },
+        { name: "المرتبة 5", baseStart: 5240, step: 265, lastGrade: 8950, transport: 500 },
+        { name: "المرتبة 6", baseStart: 6065, step: 305, lastGrade: 10335, transport: 700 },
+        { name: "المرتبة 7", baseStart: 7010, step: 365, lastGrade: 12120, transport: 700 },
+        { name: "المرتبة 8", baseStart: 8010, step: 415, lastGrade: 13820, transport: 700 },
+        { name: "المرتبة 9", baseStart: 9275, step: 470, lastGrade: 15855, transport: 700 },
+        { name: "المرتبة 10", baseStart: 10275, step: 510, lastGrade: 17415, transport: 700 },
+        { name: "المرتبة 11", baseStart: 11815, step: 530, lastGrade: 19235, transport: 900 },
+        { name: "المرتبة 12", baseStart: 13435, step: 570, lastGrade: 21415, transport: 900 },
+        { name: "المرتبة 13", baseStart: 15180, step: 605, lastGrade: 23650, transport: 900 },
+        { name: "المرتبة 14", baseStart: 17015, step: 700, lastGrade: 26815, transport: 900 },
+        { name: "المرتبة 15", baseStart: 20855, step: 865, lastGrade: 32965, transport: 900 }
+      ]
+    },
+    health_cadre: {
+      label: "الفئة في سلم الوظائف الصحية:",
+      ranks: [
+        { name: "طبيب استشاري", baseStart: 17645, step: 695, lastGrade: 27375, transport: 900 },
+        { name: "طبيب نائب", baseStart: 13205, step: 555, lastGrade: 20975, transport: 900 },
+        { name: "طبيب مقيم", baseStart: 10860, step: 495, lastGrade: 17790, transport: 700 },
+        { name: "أخصائي استشاري", baseStart: 12435, step: 510, lastGrade: 19575, transport: 700 },
+        { name: "أخصائي أول", baseStart: 10365, step: 440, lastGrade: 16525, transport: 700 },
+        { name: "أخصائي", baseStart: 8415, step: 410, lastGrade: 14155, transport: 700 },
+        { name: "فني صحي", baseStart: 5840, step: 360, lastGrade: 10880, transport: 500 },
+        { name: "مساعد صحي", baseStart: 4780, step: 295, lastGrade: 8910, transport: 500 }
+      ]
+    }
+  };
+
+  // DOM Elements
+  const cadreSelect = document.getElementById('cadreSelect');
+  const rankOrGradeLabel = document.getElementById('rankOrGradeLabel');
+  const rankSelect = document.getElementById('militaryRank');
+  const gradeSelect = document.getElementById('salaryGrade');
+  const baseSalaryInput = document.getElementById('baseSalary');
+  const eduBonusSelect = document.getElementById('eduBonus');
+  const customAllowanceInput = document.getElementById('customAllowance');
+
+  // Compensation Elements
+  const modeTotalRadio = document.getElementById('modeTotal');
+  const modeBaseRadio = document.getElementById('modeBase');
+  const compSalaryInput = document.getElementById('compSalaryInput');
+  const leaveBalanceInput = document.getElementById('leaveBalance');
+  const readinessDaysInput = document.getElementById('readinessDays');
+  const endServiceSalariesCountInput = document.getElementById('endServiceSalariesCount');
+  const custodySalariesCountInput = document.getElementById('custodySalariesCount');
+
+  // Service Elements
+  const serviceYearsInput = document.getElementById('serviceYears');
+  const serviceMonthsInput = document.getElementById('serviceMonths');
+  const extraMonthsInput = document.getElementById('extraServiceMonths');
+  const retirementReasonSelect = document.getElementById('retirementReason');
+  const totalServiceDisplay = document.getElementById('totalServiceDisplay');
+
+  // Badge tags in allowances
+  const transportTag = document.getElementById('transportTag');
+  const remoteTag = document.getElementById('remoteTag');
+  const securityTag = document.getElementById('securityTag');
+  const terrorTag = document.getElementById('terrorTag');
+
+  // Result Elements
+  const eligibilityBadge = document.getElementById('eligibilityBadge');
+  const eligibilityText = document.getElementById('eligibilityText');
+  const mainResultTitle = document.getElementById('mainResultTitle');
+  const pensionAmountDisplay = document.getElementById('pensionAmount');
+  const pensionPercentageText = document.getElementById('pensionPercentageText');
+  const percentageBar = document.getElementById('percentageBar');
+
+  // Breakdown displays
+  const leaveDaysCountDisplay = document.getElementById('leaveDaysCountDisplay');
+  const readinessDaysCountDisplay = document.getElementById('readinessDaysCountDisplay');
+  const endServiceSalariesCountDisplay = document.getElementById('endServiceSalariesCountDisplay');
+  const custodySalariesCountDisplay = document.getElementById('custodySalariesCountDisplay');
+
+  const leaveCompensationDisplay = document.getElementById('leaveCompensation');
+  const readinessCompensationDisplay = document.getElementById('readinessCompensation');
+  const endServiceRewardDisplay = document.getElementById('endServiceReward');
+  const custodyRewardDisplay = document.getElementById('custodyReward');
+  const endServiceBonusDisplay = document.getElementById('endServiceBonus');
+  const lumpSumRow = document.getElementById('lumpSumRow');
+  const totalLumpSumDisplay = document.getElementById('totalLumpSum');
+
+  const currentNetSalaryDisplay = document.getElementById('currentNetSalary');
+  const pensionNetSalaryDisplay = document.getElementById('pensionNetSalary');
+  const incomeDifferenceDisplay = document.getElementById('incomeDifference');
+  const systemNoteText = document.getElementById('systemNoteText');
+
+  // Helper format
+  function formatMoney(amount) {
+    return Math.round(amount).toLocaleString('en-US');
+  }
+
+  // Get Transport Allowance based on selected rank/grade in Cadre
+  function getSelectedTransport() {
+    if (!rankSelect.options || rankSelect.selectedIndex < 0) return 500;
+    const opt = rankSelect.options[rankSelect.selectedIndex];
+    if (opt && opt.dataset.transport) {
+      return parseInt(opt.dataset.transport, 10);
+    }
+    return 500;
+  }
+
+  // Populate ranks/grades based on selected Cadre
+  function populateRanksForCadre(cadreKey) {
+    const cadre = cadresData[cadreKey] || cadresData.military_enlisted;
+    if (rankOrGradeLabel) rankOrGradeLabel.textContent = cadre.label;
+    rankSelect.innerHTML = '';
+    cadre.ranks.forEach((r, idx) => {
+      const opt = document.createElement('option');
+      opt.value = `${r.baseStart},${r.step},${r.lastGrade}`;
+      opt.dataset.rank = r.name;
+      opt.dataset.transport = r.transport;
+      opt.textContent = r.name;
+      if (idx === 0) opt.selected = true;
+      rankSelect.appendChild(opt);
+    });
+    updateFromPresets();
+  }
+
+  // Update base salary & tags based on preset
+  function updateFromPresets() {
+    if (!rankSelect.value) return;
+    const [baseStart, step, lastGrade] = rankSelect.value.split(',').map(Number);
+    const grade = parseInt(gradeSelect.value, 10) || 1;
+    const calculatedSalary = baseStart + ((grade - 1) * step);
+    baseSalaryInput.value = calculatedSalary;
+
+    // Update Transport tag
+    const transVal = getSelectedTransport();
+    if (transportTag) {
+      transportTag.textContent = `${transVal} ريال`;
+    }
+
+    // Update Security Allowance Tag (25% of current base salary - ربع الراتب الأساسي)
+    const securityVal = Math.round(calculatedSalary * 0.25);
+    securityTag.textContent = `${securityVal.toLocaleString('en-US')} ريال (25%)`;
+
+    // Update Terror Allowance Tag (25% of baseStart - أول مربوط للرتبة)
+    const terrorVal = Math.round(baseStart * 0.25);
+    if (terrorTag) {
+      terrorTag.textContent = `${terrorVal.toLocaleString('en-US')} ريال (25%)`;
+    }
+
+    // Update Remote Tag (11% of baseStart - أول مربوط للرتبة)
+    const remoteVal = Math.round(baseStart * 0.11);
+    remoteTag.textContent = `${remoteVal.toLocaleString('en-US')} ريال (11%)`;
+
+    calculateAll();
+  }
+
+  let userManuallyEditedCompSalary = false;
+  compSalaryInput.addEventListener('input', () => {
+    userManuallyEditedCompSalary = true;
+    calculateAll();
+  });
+
+  // Calculate All
+  function calculateAll() {
+    const baseSalary = parseFloat(baseSalaryInput.value) || 0;
+    const years = parseInt(serviceYearsInput.value, 10) || 0;
+    const months = parseInt(serviceMonthsInput.value, 10) || 0;
+    const extraMonths = parseInt(extraMonthsInput.value, 10) || 0;
+    const reason = retirementReasonSelect.value;
+
+    const [baseStart, step, lastGradeSalary] = rankSelect.value.split(',').map(Number);
+
+    // Dynamic tags refresh
+    const remoteVal = Math.round(baseStart * 0.11);
+    remoteTag.textContent = `${remoteVal.toLocaleString('en-US')} ريال (11%)`;
+    const securityVal = Math.round(baseSalary * 0.25);
+    securityTag.textContent = `${securityVal.toLocaleString('en-US')} ريال (25%)`;
+    const terrorVal = Math.round(baseStart * 0.25);
+    if (terrorTag) {
+      terrorTag.textContent = `${terrorVal.toLocaleString('en-US')} ريال (25%)`;
+    }
+
+    // Calculate Allowances
+    let allowancesTotal = 0;
+
+    // 1. مكافأة الشهادات (ابتدائي 200، متوسط 250، ثانوي 300)
+    const eduBonus = parseFloat(eduBonusSelect.value) || 0;
+    allowancesTotal += eduBonus;
+
+    // 2. بدل إعاشة (500)
+    if (document.getElementById('allowanceLiving').checked) allowancesTotal += 500;
+
+    // 3. بدل إعاشة إضافية (500)
+    if (document.getElementById('allowanceExtraLiving').checked) allowancesTotal += 500;
+
+    // 4. بدل النقل
+    if (document.getElementById('allowanceTransport').checked) {
+      allowancesTotal += getSelectedTransport();
+    }
+
+    // 5. بدل يومية الميدان (450)
+    if (document.getElementById('allowanceField').checked) allowancesTotal += 450;
+
+    // 6. بدل المناطق النائية: 11% من الراتب الأساسي لأول مربوط
+    if (document.getElementById('allowanceRemote').checked) {
+      allowancesTotal += (baseStart * 0.11);
+    }
+
+    // 7. علاوة أمن: 25% (ربع الراتب الأساسي)
+    if (document.getElementById('allowanceSecurity').checked) {
+      allowancesTotal += (baseSalary * 0.25);
+    }
+
+    // 8. بدل خطر (600)
+    if (document.getElementById('allowanceDanger').checked) allowancesTotal += 600;
+
+    // 9. مكافحة إرهاب: 25% من الراتب الأساسي لأول مربوط
+    if (document.getElementById('allowanceTerror').checked) {
+      allowancesTotal += (baseStart * 0.25);
+    }
+
+    // 10. بدلات مخصصة
+    allowancesTotal += (parseFloat(customAllowanceInput.value) || 0);
+
+    // Active Service Net Salary
+    const grossActiveSalary = baseSalary + allowancesTotal;
+    const retirementDeduction = baseSalary * 0.09; // 9% استقطاع التقاعد أثناء الخدمة
+    const netActiveSalary = grossActiveSalary - retirementDeduction;
+
+    // Sync Compensation Salary if not manually overridden by user or mode changed
+    if (!userManuallyEditedCompSalary) {
+      if (modeTotalRadio.checked) {
+        compSalaryInput.value = Math.round(grossActiveSalary);
+      } else {
+        compSalaryInput.value = Math.round(baseSalary);
+      }
+    }
+
+    const compSalary = parseFloat(compSalaryInput.value) || 0;
+
+    // Total Service
+    const totalActualMonths = (years * 12) + months;
+    const totalCreditedMonths = totalActualMonths + extraMonths;
+    const totalCreditedYears = totalCreditedMonths / 12;
+
+    const dispYears = Math.floor(totalCreditedMonths / 12);
+    const dispMonths = totalCreditedMonths % 12;
+    totalServiceDisplay.textContent = `${dispYears} سنة و ${dispMonths} شهر (${totalCreditedMonths} شهراً)`;
+
+    // Pension Eligibility & Calculation
+    let isPensionEligible = false;
+    let pensionRate = 0;
+    let monthlyPension = 0;
+    let lumpSumSettlement = 0;
+    let note = "";
+
+    if (reason === 'war_disability') {
+      isPensionEligible = true;
+      pensionRate = 1.0;
+      monthlyPension = baseSalary * 1.0;
+      note = "تُسوى الحالة باحتساب المعاش كاملاً بنسبة 100% من الراتب الأساسي تقديراً لتضحيات العمليات الحربية ومكافحة الإرهاب.";
+    } else if (reason === 'medical_disability') {
+      isPensionEligible = true;
+      const standardRate = totalCreditedYears / 35;
+      pensionRate = Math.max(0.70, Math.min(1.0, standardRate));
+      monthlyPension = baseSalary * pensionRate;
+      note = "في حالة العجز الصحي بسبب الخدمة، يُصرف المعاش بما لا يقل عن 70% من الراتب الأساسي أو وفق سنوات الخدمة أيهما أفضل.";
+    } else if (reason === 'normal_age') {
+      if (totalCreditedYears >= 15 || totalCreditedMonths >= 180) {
+        isPensionEligible = true;
+        pensionRate = Math.min(1.0, totalCreditedYears / 35);
+        monthlyPension = baseSalary * pensionRate;
+        note = "التقاعد لبلوغ السن النظامي للرتبة، مستحق لمعاش تقاعدي لاكتمال مدة 15 سنة فأكثر.";
+      } else {
+        isPensionEligible = false;
+        note = "الخدمة أقل من 15 سنة عند بلوغ السن، تصرف مكافأة تصفية الخدمة لمرة واحدة.";
+      }
+    } else if (reason === 'early_request') {
+      if (years >= 18) {
+        isPensionEligible = true;
+        pensionRate = Math.min(1.0, totalCreditedYears / 35);
+        monthlyPension = baseSalary * pensionRate;
+        note = "تقاعد مبكر بناءً على طلب الفرد: مستحق للمعاش لاستيفاء شرط 18 سنة خدمة عسكرية فعلية.";
+      } else {
+        isPensionEligible = false;
+        note = "للتقاعد المبكر بناءً على طلب الفرد يشترط إكمال 18 سنة خدمة فعلية على الأقل. تستحق مكافأة لمرة واحدة.";
+      }
+    } else if (reason === 'non_disciplinary') {
+      if (years >= 15) {
+        isPensionEligible = true;
+        pensionRate = Math.min(1.0, totalCreditedYears / 35);
+        monthlyPension = baseSalary * pensionRate;
+        note = "إنهاء خدمة لغير سبب تأديبي: مستحق للمعاش لإكمال 15 سنة خدمة.";
+      } else {
+        isPensionEligible = false;
+        note = "الخدمة أقل من 15 سنة، يستحق الفرد مكافأة الدفعة الواحدة عن مدة خدمته.";
+      }
+    } else {
+      if (years >= 18) {
+        isPensionEligible = true;
+        pensionRate = Math.min(1.0, totalCreditedYears / 35);
+        monthlyPension = baseSalary * pensionRate;
+      } else {
+        isPensionEligible = false;
+        note = "عدم استيفاء المدة النظامية لاستحقاق المعاش، تصرف مكافأة لمرة واحدة.";
+      }
+    }
+
+    // Lump sum settlement if not eligible for pension
+    if (!isPensionEligible) {
+      let y = totalCreditedYears;
+      let monthsPay = 0;
+      if (y <= 5) {
+        monthsPay = y * 1.5;
+      } else if (y <= 10) {
+        monthsPay = (5 * 1.5) + ((y - 5) * 2.0);
+      } else {
+        monthsPay = (5 * 1.5) + (5 * 2.0) + ((y - 10) * 3.0);
+      }
+      lumpSumSettlement = baseSalary * monthsPay;
+      monthlyPension = 0;
+      pensionRate = 0;
+    }
+
+    // End of Service Items (مكافأة نهاية الخدمة، الإجازات، التأهب، العهدة)
+    const leaveDays = parseInt(leaveBalanceInput.value, 10) || 0;
+    const readinessDays = parseInt(readinessDaysInput.value, 10) || 0;
+    const endServiceCount = parseInt(endServiceSalariesCountInput.value, 10) || 0;
+    const custodyCount = parseInt(custodySalariesCountInput.value, 10) || 0;
+
+    // Display counts
+    leaveDaysCountDisplay.textContent = leaveDays;
+    readinessDaysCountDisplay.textContent = readinessDays;
+    endServiceSalariesCountDisplay.textContent = endServiceCount;
+    custodySalariesCountDisplay.textContent = custodyCount;
+
+    // Value calculations based on compSalary
+    const dailyCompRate = compSalary / 30;
+    const leaveAmount = dailyCompRate * leaveDays;
+    const readinessAmount = dailyCompRate * readinessDays;
+    const endServiceAmount = compSalary * endServiceCount;
+    const custodyAmount = compSalary * custodyCount;
+
+    const totalLumpSum = leaveAmount + readinessAmount + endServiceAmount + custodyAmount + (isPensionEligible ? 0 : lumpSumSettlement);
+
+    // Update Hero Result
+    if (isPensionEligible) {
+      eligibilityBadge.className = "status-pill status-qualified";
+      eligibilityBadge.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span>مستحق لمعاش تقاعدي شهري</span>`;
+      mainResultTitle.textContent = "المعاش التقاعدي الشهري التقديري:";
+      pensionAmountDisplay.textContent = formatMoney(monthlyPension);
+      const pctDisplay = Math.min(100, Math.round(pensionRate * 100));
+      pensionPercentageText.textContent = `${pctDisplay}% من الراتب الأساسي`;
+      percentageBar.style.width = `${pctDisplay}%`;
+      document.getElementById('percentageContainer').style.display = 'block';
+      lumpSumRow.style.display = 'none';
+    } else {
+      eligibilityBadge.className = "status-pill status-lump";
+      eligibilityBadge.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> <span>مكافأة تسوية دفعة واحدة فقط</span>`;
+      mainResultTitle.textContent = "مكافأة تصفية الخدمة (دفعة واحدة):";
+      pensionAmountDisplay.textContent = formatMoney(lumpSumSettlement);
+      pensionPercentageText.textContent = "لا يستحق معاشاً شهرياً لعدم استيفاء المدة";
+      percentageBar.style.width = `0%`;
+      document.getElementById('percentageContainer').style.display = 'none';
+      lumpSumRow.style.display = 'flex';
+      endServiceBonusDisplay.textContent = `${formatMoney(lumpSumSettlement)} ريال`;
+    }
+
+    // Update Breakdown
+    leaveCompensationDisplay.textContent = `${formatMoney(leaveAmount)} ريال`;
+    readinessCompensationDisplay.textContent = `${formatMoney(readinessAmount)} ريال`;
+    endServiceRewardDisplay.textContent = `${formatMoney(endServiceAmount)} ريال`;
+    custodyRewardDisplay.textContent = `${formatMoney(custodyAmount)} ريال`;
+    totalLumpSumDisplay.textContent = `${formatMoney(totalLumpSum)} ريال`;
+
+    // Income Comparison
+    currentNetSalaryDisplay.textContent = `${formatMoney(netActiveSalary)} ريال`;
+    pensionNetSalaryDisplay.textContent = `${formatMoney(monthlyPension)} ريال`;
+
+    const diff = monthlyPension - netActiveSalary;
+    const diffPct = netActiveSalary > 0 ? Math.round((diff / netActiveSalary) * 100) : 0;
+
+    if (diff < 0) {
+      incomeDifferenceDisplay.textContent = `نقص الدخل الشهري عند التقاعد: ${formatMoney(Math.abs(diff))} ريال (${Math.abs(diffPct)}% انخفاض عن الراتب الحالي)`;
+      incomeDifferenceDisplay.style.color = "var(--danger)";
+      incomeDifferenceDisplay.style.background = "var(--danger-bg)";
+    } else {
+      incomeDifferenceDisplay.textContent = `المعاش يغطي الدخل الحالي أو أعلى (${diffPct}%)`;
+      incomeDifferenceDisplay.style.color = "var(--success)";
+      incomeDifferenceDisplay.style.background = "var(--success-bg)";
+    }
+
+    systemNoteText.textContent = note;
+  }
+
+  // Radio button change handler
+  [modeTotalRadio, modeBaseRadio].forEach(radio => {
+    radio.addEventListener('change', () => {
+      userManuallyEditedCompSalary = false;
+      calculateAll();
+    });
+  });
+
+  // Listeners
+  const allInputs = [
+    baseSalaryInput, eduBonusSelect, customAllowanceInput,
+    leaveBalanceInput, readinessDaysInput, endServiceSalariesCountInput, custodySalariesCountInput,
+    serviceYearsInput, serviceMonthsInput, extraMonthsInput, retirementReasonSelect
+  ];
+
+  allInputs.forEach(elem => {
+    elem.addEventListener('input', calculateAll);
+    elem.addEventListener('change', calculateAll);
+  });
+
+  // Checkboxes
+  document.querySelectorAll('.allowance-item input[type="checkbox"]').forEach(box => {
+    box.addEventListener('change', calculateAll);
+  });
+
+  // Cadre change listener
+  cadreSelect.addEventListener('change', () => {
+    populateRanksForCadre(cadreSelect.value);
+  });
+
+  // Rank / Grade
+  rankSelect.addEventListener('change', updateFromPresets);
+  gradeSelect.addEventListener('change', updateFromPresets);
+
+  // Reset Button
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    cadreSelect.selectedIndex = 0;
+    populateRanksForCadre('military_enlisted');
+    gradeSelect.selectedIndex = 0;
+    eduBonusSelect.selectedIndex = 3; // ثانوي 300
+    customAllowanceInput.value = 0;
+    modeTotalRadio.checked = true;
+    userManuallyEditedCompSalary = false;
+    leaveBalanceInput.value = 180;
+    readinessDaysInput.value = 120;
+    endServiceSalariesCountInput.value = 6;
+    custodySalariesCountInput.value = 2;
+    serviceYearsInput.value = 20;
+    serviceMonthsInput.value = 0;
+    extraMonthsInput.value = 0;
+    retirementReasonSelect.selectedIndex = 0;
+
+    document.getElementById('allowanceLiving').checked = true;
+    document.getElementById('allowanceExtraLiving').checked = true;
+    document.getElementById('allowanceTransport').checked = true;
+    document.getElementById('allowanceField').checked = true;
+    document.getElementById('allowanceRemote').checked = false;
+    document.getElementById('allowanceSecurity').checked = true;
+    document.getElementById('allowanceDanger').checked = true;
+    document.getElementById('allowanceTerror').checked = false;
+
+    updateFromPresets();
+  });
+
+  // Dark/Light Theme
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  const themeText = document.getElementById('themeText');
+  let isDarkMode = false;
+
+  themeToggleBtn.addEventListener('click', () => {
+    isDarkMode = !isDarkMode;
+    if (isDarkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      themeText.textContent = 'الوضع النهاري';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      themeText.textContent = 'الوضع الليلي';
+    }
+  });
+
+  // Init
+  populateRanksForCadre('military_enlisted');
+</script>
+</body>
+</html>
